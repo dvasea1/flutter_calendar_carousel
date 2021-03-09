@@ -2,14 +2,15 @@ library flutter_calendar_dooboo;
 
 import 'dart:async';
 
-import 'package:date_utils/date_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_calendar_carousel/classes/event_list.dart';
-import 'package:flutter_calendar_carousel/src/default_styles.dart';
+import 'package:flutter_calendar_carousel/date_utils.dart' as DD;
 import 'package:flutter_calendar_carousel/src/calendar_header.dart';
+import 'package:flutter_calendar_carousel/src/default_styles.dart';
 import 'package:flutter_calendar_carousel/src/weekday_row.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart' show DateFormat;
+
 export 'package:flutter_calendar_carousel/classes/event_list.dart';
 
 typedef MarkedDateIconBuilder<T> = Widget Function(T event);
@@ -361,7 +362,8 @@ class _CalendarState<T> extends State<CalendarCarousel<T>> {
                   bool isSelectable = true;
 
                   if (widget.onlyMarkedDatesCanBeSelected) {
-                    if (widget.markedDatesMap != null && widget.markedDatesMap.events != null) {
+                    if (widget.markedDatesMap != null &&
+                        widget.markedDatesMap.events != null) {
                       if (widget.markedDatesMap.events.keys.firstWhere(
                               (key) => (key.year == now.year &&
                                   key.month == now.month &&
@@ -405,7 +407,8 @@ class _CalendarState<T> extends State<CalendarCarousel<T>> {
                                   side: BorderSide(
                                     color: isSelectedDay
                                         ? widget.selectedDayBorderColor
-                                        : isToday && widget.todayBorderColor != null
+                                        : isToday &&
+                                                widget.todayBorderColor != null
                                             ? widget.todayBorderColor
                                             : isPrevMonthDay
                                                 ? widget.prevMonthDayBorderColor
@@ -420,7 +423,8 @@ class _CalendarState<T> extends State<CalendarCarousel<T>> {
                                   side: BorderSide(
                                     color: isSelectedDay
                                         ? widget.selectedDayBorderColor
-                                        : isToday && widget.todayBorderColor != null
+                                        : isToday &&
+                                                widget.todayBorderColor != null
                                             ? widget.todayBorderColor
                                             : isPrevMonthDay
                                                 ? widget.prevMonthDayBorderColor
@@ -677,10 +681,10 @@ class _CalendarState<T> extends State<CalendarCarousel<T>> {
   List<DateTime> _getDaysInWeek([DateTime selectedDate]) {
     if (selectedDate == null) selectedDate = new DateTime.now();
 
-    var firstDayOfCurrentWeek = Utils.firstDayOfWeek(selectedDate);
-    var lastDayOfCurrentWeek = Utils.lastDayOfWeek(selectedDate);
+    var firstDayOfCurrentWeek = DD.DateUtils.firstDayOfWeek(selectedDate);
+    var lastDayOfCurrentWeek = DD.DateUtils.lastDayOfWeek(selectedDate);
 
-    return Utils.daysInRange(firstDayOfCurrentWeek, lastDayOfCurrentWeek)
+    return DD.DateUtils.daysInRange(firstDayOfCurrentWeek, lastDayOfCurrentWeek)
         .toList();
   }
 
@@ -694,7 +698,8 @@ class _CalendarState<T> extends State<CalendarCarousel<T>> {
             widget.maxSelectedDate.millisecondsSinceEpoch) return;
 
     if (widget.onlyMarkedDatesCanBeSelected) {
-      if (widget.markedDatesMap != null && widget.markedDatesMap.events != null) {
+      if (widget.markedDatesMap != null &&
+          widget.markedDatesMap.events != null) {
         if (widget.markedDatesMap.events.keys.firstWhere(
                 (key) => (key.year == picked.year &&
                     key.month == picked.month &&
@@ -877,7 +882,7 @@ class _CalendarState<T> extends State<CalendarCarousel<T>> {
     } else {
       return Container(
         height: double.infinity,
-       // padding: EdgeInsets.only(bottom: 4.0),
+        // padding: EdgeInsets.only(bottom: 4.0),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.end,
           mainAxisSize: MainAxisSize.max,
